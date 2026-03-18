@@ -34,6 +34,30 @@ https://drive.google.com/drive/folders/155ka733K1SlicONjB8LMvLXrNo6hKfRV?usp=dri
 - **Groq API Key** (Llama 3.3 Inference)
 
 ---
+## Application Interface
+
+### Dashboard
+
+![Flow Weaver Demo](/public/3.png)
+
+### Charts
+
+![Flow Weaver Demo](/public/2.png)
+
+
+### Canvas(Workflow)
+
+![Flow Weaver Demo](/public/1.png)
+
+### Pricings - Pro version
+
+![Flow Weaver Demo](/public/4.png)
+
+
+### Rozarpay Integration
+
+![Flow Weaver Demo](/public/5.png)
+
 
 ### Installation
 
