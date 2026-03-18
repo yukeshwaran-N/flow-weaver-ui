@@ -1,4 +1,4 @@
-# 🌌 Flow Weaver: Enterprise AI Workflow Architect
+# Flow Weaver: Enterprise AI Workflow Architect
 
 ![Vercel](https://img.shields.io/badge/Deployed-Vercel-black?style=for-the-badge&logo=vercel)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
@@ -8,24 +8,24 @@
 A powerful, state-of-the-art **AI Workflow Orchestration Platform** built for high-performance teams.  
 Flow Weaver streamlines complex business processes through **automated AI pipeline generation**, **human-in-the-loop approvals**, and **passive rule evaluation**, aligned with modern enterprise SaaS operations.
 
-## 🌐 Live Application
+## Live Application
 [https://flow-weaver-yuki.vercel.app/](https://flow-weaver-yuki.vercel.app/)
 
 ---
 
-## 🎥 Demo Video link
+## Demo Video link
 https://drive.google.com/drive/folders/155ka733K1SlicONjB8LMvLXrNo6hKfRV?usp=drive_link
 
 ---
 
 
-## 🎥 Live Demo
+## Live Demo
 
 ![Flow Weaver Demo](output.gif)
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - **Node.js 18+**
@@ -49,9 +49,9 @@ npm install
 npm run dev
 ```
 
-## ✨ Features
+## Features
 
-### 🔍 AI-Powered Architect
+### AI-Powered Architect
 - **1-Click Generation** of complex workflows from natural language prompts.
 - **Intelligent Node Mapping**:
   - **Tasks & Decisions** (Auto-logic)
@@ -62,7 +62,7 @@ npm run dev
 
 ---
 
-### 🧬 SaaS Multi-Tenancy & Security
+### SaaS Multi-Tenancy & Security
 - Built-in **PostgreSQL Row-Level Security (RLS)** for cryptographically isolated tenant data.
 - **Role-Based Access Control (RBAC)**:
   - Platform Admin & Company Admin
@@ -72,7 +72,7 @@ npm run dev
 
 ---
 
-### 🔗 Enterprise-Grade Integrations
+### Enterprise-Grade Integrations
 - **Global Caching**: Upstash Redis for low-latency session and state mirroring.
 - **Notification Server**: Node.js microservice for SMTP-based transactional email delivery.
 - **Execution Sandbox**: FastAPI bridge for secure local Python/JS logic execution.
@@ -80,7 +80,7 @@ npm run dev
 
 ---
 
-### ⚡ Performance & LUX UX
+### Performance & LUX UX
 - **Luxury UI Design**: Dynamic Typewriter effects with premium **Outfit** & **Caveat** fonts.
 - **Micro-animations**: Smooth HSL-tailored transitions via Framer Motion.
 - **High-Impact Visuals**: Custom glassmorphism, `text-glow`, and tri-color gradients (Indigo-Blue-Violet).
@@ -88,7 +88,7 @@ npm run dev
 
 ---
 
-## 🛠️ Performance Architecture
+## Performance Architecture
 
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
