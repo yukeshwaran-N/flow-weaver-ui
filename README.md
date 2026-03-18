@@ -73,6 +73,28 @@ npm install
 npm run dev
 ```
 
+## Integrated Technology & Feature Matrix
+
+| Category | Technology / Stack | Key Implementation / Feature |
+| :--- | :--- | :--- |
+| **Logic Core** | `React 18 (Vite)` | High-performance concurrent rendering for complex Graph UIs. |
+| **AI Generation** | `Groq Cloud / Llama 3.3` | **AI Architect**: NLP to Workflow DAG (Directed Acyclic Graph) in <1s. |
+| **Payments** | `Stripe / Billing Engine` | **Premium SaaS Tiers**: Pro-plan gating, subscription management, and upsell logic. |
+| **Caching Layer** | `Upstash Redis` | **Performance Accelerator**: Sub-100ms session lookups and Rate Limiting. |
+| **Performance** | `Upstash Redis` | **Cached Auth & State**: Sub-100ms session lookups and Rate Limiting. |
+| **Real-Time** | `WebSockets (Supabase)` | **Live Sync**: Bidirectional updates for all collaborative editing/execution. |
+| **Persistence** | `Supabase (Postgres)` | **Multi-Tenant RLS**: Cryptographical isolation between every company. |
+| **Workflow Canvas** | `Xyflow (React Flow)` | Visual state machine for managing Tasks, Approvals, and Notifications. |
+| **Styling** | `Tailwind CSS 3.4` | Premium Design System with custom `Outfit` & `Caveat` typography. |
+| **Animations** | `Framer Motion` | Fluid Typewriter hero effects and dynamic state transitions. |
+| **Multi-Tenancy** | `Supabase Auth + RLS` | **RBAC Engine**: Granular Admin/Manager/Employee role-based access. |
+| **Notifications** | `Node.js + SMTP` | **Enterprise Email**: Real SMTP alerts (Nodemailer) for human approvals. |
+| **Billing & SaaS** | `Context API + Metadata` | **Subscription Tiers**: Automated Pro-Gating and Upsell Modal logic. |
+| **Execution Hub** | `FastAPI Bridge` | **Custom JS/Python Sandbox**: Secure execution for custom logic nodes. |
+| **Audit & History** | `Supabase Logs` | **Full Transparency**: Step-by-step execution snapshots and history. |
+
+---
+
 ## Features
 
 ### AI-Powered Architect
@@ -127,3 +149,4 @@ npm run dev
   <p>Built with ❤️ for Modern Enterprises</p>
   <b>Flow Weaver</b> &copy; 2026
 </div>
+
