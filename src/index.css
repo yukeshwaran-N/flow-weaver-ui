@@ -1,8 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Caveat:wght@400..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+  }
+
+  .hero-gradient {
+    background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
 
 @layer base {
   :root {
@@ -72,7 +85,74 @@
   .card-shadow {
     box-shadow: 0 1px 3px 0 hsl(220 20% 10% / 0.04), 0 1px 2px -1px hsl(220 20% 10% / 0.04);
   }
+
   .card-shadow-hover {
     box-shadow: 0 4px 12px 0 hsl(220 20% 10% / 0.08), 0 2px 4px -2px hsl(220 20% 10% / 0.04);
   }
+}
+
+/* React Flow Dark Overrides - Forced */
+.xyflow__controls,
+.react-flow__controls {
+  background-color: rgba(15, 23, 42, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 30px -5px rgb(0 0 0 / 0.5) !important;
+  margin-left: 12px !important;
+  margin-bottom: 24px !important;
+  overflow: hidden !important;
+}
+
+.xyflow__controls-button,
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: #94a3b8 !important;
+  /* Slate 400 */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 28px !important;
+  transition: all 0.2s ease !important;
+}
+
+.xyflow__controls-button:hover,
+.react-flow__controls-button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #f1f5f9 !important;
+  /* Slate 100 */
+}
+
+.xyflow__controls-button svg,
+.react-flow__controls-button svg {
+  fill: currentColor !important;
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.xyflow__controls-button:last-child,
+.react-flow__controls-button:last-child {
+  border-bottom: none !important;
+}
+
+.xyflow__minimap,
+.react-flow__minimap {
+  background-color: rgba(2, 6, 23, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 1rem !important;
+}
+
+.xyflow__minimap-mask,
+.react-flow__minimap-mask {
+  fill: rgba(2, 6, 23, 0.6) !important;
+}
+
+.xyflow__attribution {
+  background: rgba(2, 6, 23, 0.5) !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  color: #475569 !important;
 }

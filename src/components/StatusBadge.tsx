@@ -16,6 +16,7 @@ const statusBadgeVariants = cva(
         approved: "bg-success/10 text-success",
         rejected: "bg-destructive/10 text-destructive",
         passed: "bg-success/10 text-success",
+        forwarded: "bg-info/10 text-info",
       },
     },
     defaultVariants: {

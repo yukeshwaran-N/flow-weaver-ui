@@ -1,64 +1,132 @@
-import { StatusBadge } from "@/components/StatusBadge";
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
-import { useState } from "react";
-import type { Execution } from "@/types";
-
-const mockExecutions: Execution[] = [
-  { id: "EXE-001", workflowId: "WF-001", workflowName: "Order Processing", status: "completed", startedBy: "John Doe", startTime: "2026-03-13 09:15", duration: "12m 30s" },
-  { id: "EXE-002", workflowId: "WF-002", workflowName: "User Onboarding", status: "running", startedBy: "Jane Smith", startTime: "2026-03-13 09:30" },
-  { id: "EXE-003", workflowId: "WF-003", workflowName: "Invoice Approval", status: "pending", startedBy: "Bob Wilson", startTime: "2026-03-13 09:45" },
-  { id: "EXE-004", workflowId: "WF-004", workflowName: "Data Sync Pipeline", status: "failed", startedBy: "Alice Brown", startTime: "2026-03-13 08:00", duration: "0.5s" },
-  { id: "EXE-005", workflowId: "WF-001", workflowName: "Order Processing", status: "completed", startedBy: "John Doe", startTime: "2026-03-13 07:30", duration: "8m 12s" },
-  { id: "EXE-006", workflowId: "WF-005", workflowName: "Report Generation", status: "completed", startedBy: "Jane Smith", startTime: "2026-03-12 16:00", duration: "3m 45s" },
-];
+import { useEffect, useState } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Search, Eye } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
+import { useNavigate } from 'react-router-dom'
 
 export default function Executions() {
-  const [search, setSearch] = useState("");
-  const filtered = mockExecutions.filter((e) => e.workflowName.toLowerCase().includes(search.toLowerCase()) || e.id.toLowerCase().includes(search.toLowerCase()));
+  const navigate = useNavigate()
+  const [executions, setExecutions] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  useEffect(() => {
+    async function fetchExecutions() {
+      setLoading(true)
+
+      const { data } = await supabase
+        .from('workflow_executions')
+        .select('id, status, created_at, triggered_by, current_step_id, workflows!inner(name), profiles!triggered_by(full_name, email)')
+        .order('created_at', { ascending: false })
+
+      if (data) setExecutions(data as any[])
+
+      setLoading(false)
+    }
+    fetchExecutions()
+  }, [])
+
+  const filtered = executions.filter(exec => {
+    const matchesSearch =
+      (exec.workflows?.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      exec.profiles?.full_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      exec.id.includes(searchQuery)
+
+    return matchesSearch
+  })
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold text-foreground">Executions</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Monitor workflow execution history</p>
+    <div className="p-8 max-w-full space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Global Executions</h1>
+          <p className="text-muted-foreground mt-1">Company-wide view of all workflow executions.</p>
+        </div>
       </div>
 
-      <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <input type="text" placeholder="Search executions..." value={search} onChange={(e) => setSearch(e.target.value)} className="h-9 w-full rounded-lg border border-input bg-background pl-9 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/20" />
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search IDs, Workflows..."
+            className="pl-9 h-10"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
       </div>
 
-      <div className="rounded-lg border border-border bg-card card-shadow overflow-x-auto">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-border text-left">
-              <th className="px-6 py-3 text-xs font-medium uppercase text-muted-foreground">ID</th>
-              <th className="px-6 py-3 text-xs font-medium uppercase text-muted-foreground">Workflow</th>
-              <th className="px-6 py-3 text-xs font-medium uppercase text-muted-foreground">Status</th>
-              <th className="px-6 py-3 text-xs font-medium uppercase text-muted-foreground">Started By</th>
-              <th className="px-6 py-3 text-xs font-medium uppercase text-muted-foreground">Start Time</th>
-              <th className="px-6 py-3 text-xs font-medium uppercase text-muted-foreground">Duration</th>
-              <th className="px-6 py-3 text-xs font-medium uppercase text-muted-foreground">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((exec) => (
-              <tr key={exec.id} className="border-b border-border last:border-0 hover:bg-muted/50 transition-colors">
-                <td className="px-6 py-4 text-sm font-mono text-foreground">{exec.id}</td>
-                <td className="px-6 py-4 text-sm text-foreground">{exec.workflowName}</td>
-                <td className="px-6 py-4"><StatusBadge variant={exec.status}>{exec.status}</StatusBadge></td>
-                <td className="px-6 py-4 text-sm text-muted-foreground">{exec.startedBy}</td>
-                <td className="px-6 py-4 text-sm text-muted-foreground">{exec.startTime}</td>
-                <td className="px-6 py-4 text-sm text-muted-foreground">{exec.duration || "—"}</td>
-                <td className="px-6 py-4">
-                  <Button variant="ghost" size="sm" className="text-primary hover:text-primary">View</Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Card className="border-border/60 shadow-md">
+        <CardHeader className="bg-muted/30 border-b">
+          <CardTitle className="text-lg">Execution Details</CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs text-muted-foreground uppercase bg-muted/20">
+                <tr>
+                  <th className="px-6 py-4 font-semibold">Workflow</th>
+                  <th className="px-6 py-4 font-semibold">Started By</th>
+                  <th className="px-6 py-4 font-semibold">Start Time</th>
+                  <th className="px-6 py-4 font-semibold">Status</th>
+                  <th className="px-6 py-4 font-semibold text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border/40">
+                {loading && (
+                  <tr><td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">Loading executions...</td></tr>
+                )}
+                {!loading && filtered.map((exec) => (
+                  <tr key={exec.id} className="hover:bg-muted/40 transition-colors group">
+                    <td className="px-6 py-4">
+                      <div className="text-foreground font-medium">{exec.workflows?.name}</div>
+                      <div className="text-xs text-muted-foreground font-mono mt-0.5">{exec.id.slice(0, 8)}</div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="font-medium text-foreground">{exec.profiles?.full_name || 'System Auto'}</div>
+                    </td>
+                    <td className="px-6 py-4 text-muted-foreground">
+                      {new Date(exec.created_at).toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4">
+                      <Badge
+                        className={
+                          exec.status === 'completed' ? 'bg-green-100 text-green-800' :
+                            exec.status === 'failed' ? 'bg-red-100 text-red-800' :
+                              'bg-blue-100 text-blue-800'
+                        }
+                        variant="secondary"
+                      >
+                        {exec.status.toUpperCase()}
+                      </Badge>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => navigate(`/executions/detail/${exec.id}`)}
+                      >
+                        <Eye className="h-4 w-4 mr-2" /> View Trace
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+                {!loading && filtered.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">
+                      No executions found matching your criteria.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
     </div>
-  );
+  )
 }
