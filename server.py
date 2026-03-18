@@ -12,14 +12,14 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Initialize Groq Client
 # Replace with your actual key if different
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "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")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "gsk_redacted")
 client = Groq(api_key=GROQ_API_KEY)
 
 # SMTP Configuration
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 587
-SMTP_USER = "anonymousattack1010@gmail.com"
-SMTP_PASS = "rbnh mede fvkb bzae"
+SMTP_USER = "redacted@gmail.com"
+SMTP_PASS = "redacted"
 
 @app.route("/", methods=["GET"])
 def index():
