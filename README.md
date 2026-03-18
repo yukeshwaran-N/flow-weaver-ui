@@ -1,109 +1,128 @@
-# Flow Weaver: Enterprise AI Workflow Architect
+# 🌌 Flow Weaver: Enterprise AI Workflow Orchestration
 
-> A state-of-the-art, multi-tenant SaaS platform for orchestrating complex business processes using AI-powered generation, real-time rule evaluation, and human-in-the-loop approvals.
-
-![Project Status](https://img.shields.io/badge/Status-Live-success)
-![Tech Stack](https://img.shields.io/badge/Stack-Vite%20%7C%20Supabase%20%7C%20Redis%20%7C%20Groq-blue)
-
----
-
-## 🌟 Core Innovation: AI-Powered Orchestration
-
-Flow Weaver isn't just a builder; it's an **Architect**.
-- **AI Workflow Architect**: Integration with **Groq API** (`llama-3.3-70b-versatile`) allows users to describe a process in natural language and generate a fully-mapped execution graph (nodes and edges) in seconds.
-- **Visual Builder**: Powered by **Xyflow (React Flow)**, offering a professional-grade canvas for drag-and-drop workflow management with custom node types for Tasks, Approvals, and Notifications.
-- **Dynamic Typewriter UI**: A premium landing experience with real-time "writing" animations and high-impact typography using **Outfit** and **Caveat** fonts.
+<div align="center">
+  <img src="https://img.shields.io/badge/Production-Ready-success?style=for-the-badge&logo=rocket" />
+  <img src="https://img.shields.io/badge/Powered%20By-Groq%20AI-orange?style=for-the-badge&logo=openai" />
+  <img src="https://img.shields.io/badge/Architecture-Multi--Tenant-blueviolet?style=for-the-badge&logo=kubernetes" />
+</div>
 
 ---
 
-## 🛠️ Technical Deep Dive & Integrations
-
-### 1. High-Performance Caching (Redis)
-- **Engine**: **Upstash Redis** (Serverless)
-- **Purpose**: Implements a robust caching layer to store session data, execution states, and frequently accessed company configurations. This ensures minimal latency and drastically reduces the load on the primary PostgreSQL database.
-
-### 2. AI Intelligence (Groq Cloud)
-- **Inference Engine**: **Llama 3.3 70B Versatile**
-- **Orchestration**: A specialized backend service (Python/Flask) that parses natural language requirements into structured JSON schemas. It handles complex logic derivation, edge routing, and automated step naming.
-
-### 3. Multi-Tenant SaaS Architecture
-- **Data Isolation**: Uses **PostgreSQL Row-Level Security (RLS)** in Supabase to ensure that every company's data is cryptographically and logically isolated.
-- **RBAC (Role-Based Access Control)**: 
-    - `platform_admin`: Global system health and company management.
-    - `company_admin`: Organization-wide settings, billing, and rosters.
-    - `manager`: Workflow approvals and team performance monitoring.
-    - `employee`: Execution of assigned tasks and personal history tracking.
-- **State Stability**: Centralized Context API architecture (`AuthProvider`, `RoleProvider`, `CompanyProvider`) eliminates UI flickering and ensures a single source of truth for all critical session data.
-
-### 4. Enterprise-Grade Workflow Engine
-- **Rule Engine**: A custom-built, priority-based evaluation engine running as a PostgreSQL RPC. Supports complex logical operators (`&&`, `||`), string functions, and `DEFAULT` fallbacks.
-- **Execution Guard**: Built-in protection against infinite loops (max 50 iterations) and real-time execution logging for every step, including input/output snapshots.
-
-### 5. Premium Subscription Logic
-- **Tier Management**: Real-time tracking of `free` vs `pro` subscription statuses.
-- **Upsell Engine**: An intelligent diagnostic system that triggers a premium promotion modal for non-pro users on every login/reload, effectively driving conversion for high-value features.
+## 💎 The Vision
+**Flow Weaver** is a high-performance, AI-native platform designed to bridge the gap between human decision-making and automated execution. It allows enterprises to describe complex business processes in plain English and automatically generate high-fidelity, executable workflow graphs.
 
 ---
 
-## 🏗️ Tech Stack
+## 🛠️ Tech Stack Matrix
 
-| Layer | Technology | Purpose |
-|---|---|---|
-| **Frontend** | React 18, TypeScript, Vite | Core Application Framework |
-| **Styling** | Tailwind CSS, Framer Motion | Luxury UI & Micro-animations |
-| **Canvas** | @xyflow/react | Visual Workflow Engine |
-| **Database** | Supabase (Postgres) | Persistence & RLS Security |
-| **Caching** | Upstash Redis | Global Performance Optimization |
-| **AI** | Groq (Llama 3.3) | NLP to Graph Generation |
-| **Notifications** | Node.js + Nodemailer | Enterprise Email delivery (SMTP) |
-| **Execution** | FastAPI Bridge | Sandbox for custom Python logic |
+| Layer | Technology | Key Feature |
+| :--- | :--- | :--- |
+| **Frontend Core** | `React 18` | Concurrent Rendering & Concurrent UI Patterns. |
+| **State Management** | `React Context` | Optimized global providers (`Auth`, `Role`, `Company`) to prevent prop-drilling. |
+| **Workflow Engine** | `Xyflow (React Flow)` | High-performance interactive canvas for complex DAG (Directed Acyclic Graph) rendering. |
+| **AI Intelligence** | `Groq Cloud (Llama 3.3)` | Sub-second inference for Natural Language to JSON Graph generation. |
+| **Primary Database** | `Supabase (PostgreSQL)` | Enterprise-grade persistence with cryptographically secure Row-Level Security (RLS). |
+| **Global Cache** | `Upstash Redis` | Low-latency session caching and execution state mirroring. |
+| **Real-time Sync** | `Supabase Realtime` | **WebSocket-based** synchronization for collaborative workflow editing and execution tracking. |
+| **Notification Engine** | `Node.js + SMTP` | SMTP-based transactional email delivery for approvals and rejections. |
+| **Styling** | `Tailwind CSS 3.4` | Utility-first design system with premium HSL-tailored colors. |
+| **Animations** | `Framer Motion` | Fluid entrance/exit transitions and micro-interactions. |
 
 ---
 
-## ⚙️ Environment Configuration
+## 🏗️ System Architecture
 
-To run the full stack, configure your `.env` file with these keys:
-
-```env
-# Database & Auth
-VITE_SUPABASE_URL=your_url
-VITE_SUPABASE_ANON_KEY=your_key
-
-# Performance & AI
-VITE_UPSTASH_REDIS_REST_URL=your_redis_url
-VITE_UPSTASH_REDIS_REST_TOKEN=your_token
-VITE_GROQ_API_KEY=your_groq_key
-
-# Notifications (Gmail App Password)
-GMAIL_USER=your_email
-GMAIL_PASSWORD=your_app_password
+```mermaid
+graph TD
+    User([User Prompt]) --> Frontend[React Frontend]
+    Frontend --> Auth{Supabase Auth}
+    Auth -->|Free/Pro Check| RoleGate[RoleProvider]
+    
+    Frontend -->|Describe Process| AI[Groq AI Architect]
+    AI -->|JSON Schema| GraphRenderer[Xyflow Canvas]
+    
+    GraphRenderer -->|Save/Execute| DB[(Supabase Postgres)]
+    DB -->|RLS Isolation| Cache[(Upstash Redis Cache)]
+    
+    DB --> Realtime((WebSockets))
+    Realtime -->|Live Update| Frontend
+    
+    DB -->|Trigger Notify| EmailServer[Node.js SMTP Server]
+    EmailServer -->|Gmail API| Approver([Manager Email])
 ```
 
 ---
 
-## 📁 Project Structure
+## 🔐 Core Technical Pillars
+
+### 1. The AI Architect (NLP to Graph)
+Integrating **Groq's Llama-3.3-70B** model, we implemented a specialized prompt engineering layer that converts unstructured descriptions (e.g., *"If amount > 5000, send to CEO else Manager"*) into valid workflow nodes and reactive edges. 
+- **Sub-1s Inference**: Leveraging Groq’s LPU technology.
+- **Structured JSON Output**: Ensures the generated graphs are immediately executable without manual repair.
+
+### 2. SaaS Multi-Tenancy & Security
+Every query is protected by **PostgreSQL Row-Level Security (RLS)**.
+- **Tenant Isolation**: Users only see data belonging to their specific `company_id`.
+- **RBAC (Role-Based Access Control)**: Granular permissions for four roles: `platform_admin`, `company_admin`, `manager`, and `employee`.
+- **Zero-Flicker Hydration**: Centralized `AuthProvider` and `RoleProvider` use cached session metadata to render the app shell instantly, fetching details in the background.
+
+### 3. Performance Caching (Upstash Redis)
+To achieve sub-100ms response times for critical paths:
+- **Session Mirroring**: Stores active user roles and subscription tiers in Redis.
+- **Rate Limiting**: Protects expensive AI endpoints from excessive usage.
+- **State Caching**: Mirrors workflow execution status to minimize primary database hits during heavy polling.
+
+### 4. Real-time Communication (WebSockets)
+Leveraging **Supabase Realtime**, the platform establishes secure WebSocket channels for:
+- **Collaborative Editing**: Multiple admins can see updates in the Workflow Editor instantly.
+- **Execution Monitoring**: Employees see their workflow progress in real-time as steps complete or pause for approval.
+
+---
+
+## 💰 Premium Subscription Engine
+The platform includes an automated **Pro Conversion Engine**:
+- **Feature Gating**: AI generations and advanced rules are exclusive to `pro` tier profiles.
+- **Upsell Popup**: A premium, motion-styled modal triggers 5 seconds after every reload for non-pro users, using local/session storage to track impressions.
+- **Payment Architecture**: Prepared for Stripe/LemonSqueezy integration with a dedicated `subscription_tier` metadata field in the primary user profile.
+
+---
+
+## 📁 Project Blueprint
 
 ```bash
-flow-weaver-ui/
-├── src/
-│   ├── providers/          # Global Context (Auth, Role, Company)
-│   ├── components/
-│   │   ├── workflow/       # Node.js types & SVG Logic
-│   │   └── UpsellPopup.tsx # Premium Conversion Logic
-│   ├── pages/
-│   │   ├── Landing.tsx     # Typography & Typewriter Hero
-│   │   └── WorkflowEditor.tsx # Graph Engine & AI Integration
-├── server.js               # Notification Microservice
-├── executor.py             # Sandbox Execution Engine
-└── supabase_schema.sql     # Database, RLS, & Workflows
+/src
+  /providers     # The "Brain" - Auth, Role, & Data Contexts
+  /components    # The "Skin" - Visual Nodes & UI Components
+  /lib           # The "Nervous System" - Supabase, Redis, & AI Clients
+  /pages         # The "Vessels" - High-impact Landing & Workspaces
+/server          # The "Voice" - Node/SMTP microservice
+/executor        # The "Hands" - Python-based code execution sandbox
 ```
 
 ---
 
-## ✅ Core Features Summary
-- [x] **AI Architect**: 1-click workflow generation from text.
-- [x] **Zero-Flicker**: Ultra-stable UI with global state management.
-- [x] **Human-in-the-Loop**: Interactive approvals for business logic.
-- [x] **Email Notifications**: Real SMTP alerts on step completion.
-- [x] **Pro Subscription**: Tiered access and upsell mechanics.
-- [x] **Audit Logs**: Full transparency for every automated step.
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- Supabase Project (SQL schema in `supabase_schema.sql`)
+- Redis instance (Upstash recommended)
+
+### Environment Setup
+Create a `.env` file:
+```env
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+VITE_UPSTASH_REDIS_REST_URL=...
+VITE_UPSTASH_REDIS_REST_TOKEN=...
+VITE_GROQ_API_KEY=...
+GMAIL_USER=...
+GMAIL_PASSWORD=...
+```
+
+---
+
+<div align="center">
+  <p>Built with ❤️ for High-Performance Teams</p>
+  <b>Flow Weaver</b> &copy; 2026
+</div>
